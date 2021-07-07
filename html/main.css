@@ -196,3 +196,23 @@ ul li[h]::after {
     left: 72px;
     color: #666;
 }
+
+.resultContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    row-gap: 1rem;
+}
+
+.container{
+    border: 1px solid green;
+    padding: 10px;
+    box-shadow: 1px 2px 6px 2px rgba(0, 0, 0, 1);
+    width: 30em;
+    height: 30em;
+}
+.container>img{
+    width: 20px;
+    height: 20px;
+}
