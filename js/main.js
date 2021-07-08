@@ -1,7 +1,28 @@
 const proxyUrl = "http://localhost:3000/q";
 const regex = new RegExp('\{"mods".*\}')
+
+const clearIcon = document.querySelector(".clear-icon");
+const searchBar = document.querySelector(".search");
+
+searchBar.addEventListener("keyup", () => {
+    if(searchBar.value && clearIcon.style.visibility != "visible"){
+        clearIcon.style.visibility = "visible";
+    } else if(!searchBar.value) {
+        clearIcon.style.visibility = "hidden";
+    }
+});
+
+clearIcon.addEventListener("click", () => {
+    searchBar.value = "";
+    clearIcon.style.visibility = "hidden";
+})
+
+const formObj = document.querySelector("form")
+formObj.addEventListener("submit", Main);
+
+
 async function Main(){
-    document.addEventListener("submit", async () => {
+    //document.addEventListener("submit", async () => {
         let input = document.querySelector("input").value
         let result = await get_resource(input)
         log("main")
@@ -21,7 +42,7 @@ async function Main(){
         await buildView(filtered)
         //document.body.innerHTML = await get_resource(input).body.innerHTML;
 
-    })
+
 }
 
 function genName(){
