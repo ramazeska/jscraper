@@ -4,6 +4,9 @@ const regex = new RegExp('\{"mods".*\}')
 const clearIcon = document.querySelector(".clear-icon");
 const searchBar = document.querySelector(".search");
 
+let typingTimer;                //timer identifier
+let doneTypingInterval = 5000;
+
 let sharedObject = {}
 
 searchBar.addEventListener("keyup", () => {
@@ -19,8 +22,32 @@ clearIcon.addEventListener("click", () => {
     clearIcon.style.visibility = "hidden";
 })
 
-const formObj = document.querySelector("form")
-formObj.addEventListener("submit", Main);
+const formObj = document.querySelector("input")
+//formObj.addEventListener("", logSubmit);
+
+formObj.addEventListener('keyup', (e) => {
+    log(e.key)
+    if (e.key === 'Enter'|| e.keyCode === 13){
+        Main()
+    }
+    /*clearTimeout(typingTimer);
+    let val = document.querySelector("input").value
+    log(val)
+    
+    if (document.querySelector("input").value) {
+        typingTimer = setTimeout(Main, doneTypingInterval);
+    } else {
+        if (e.key === 'Enter'|| e.keyCode === 13){
+            let val2 =  document.querySelector("input").value
+            log('matched')
+        }
+    }*/
+    
+});
+
+function doneTyping(){
+    
+}
 
 function log(msg){console.log(msg)}
 
@@ -59,6 +86,11 @@ function CreateParentElem(){
         return parentElem
 }
 
+
+function logSubmit(event) {
+    log.textContent = `Form Submitted! Time stamp: ${event.timeStamp}`;
+    event.preventDefault();
+}
 
 async function Main(){
         log('debug')
@@ -184,11 +216,9 @@ async function buildView(){
 }
 
 async function get_resource(url){
-    log(url.toString())
-    fetch(url.toString())
+    return fetch(url)
     .then(
         function (response){
-            log(response.status)
             return response.text()
         })
     .then(function (data){
@@ -216,9 +246,12 @@ async function get_resource(url){
         }
 
 
-
-    }).catch(err => {log(err)})
-
+        return true
+    })
+    .catch(err => {
+            console.error(err)
+            return false
+        })
 
 }
 
