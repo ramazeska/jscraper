@@ -60,7 +60,8 @@ function CreateParentElem(){
 }
 
 
-async function Main(){       
+async function Main(){
+        log('debug')
         let input = document.querySelector("input").value
         let url = buildUrl(input)
         await get_resource(url)
@@ -70,7 +71,8 @@ async function Main(){
     
 }
 
-function FilterResults(){
+async function FilterResults(){
+    log(JSON.stringify(sharedObject))
    sharedObject['mods'] = sharedObject['mods'].mods.itemList.content.map(function (mods){
         try {
             return {
@@ -182,9 +184,11 @@ async function buildView(){
 }
 
 async function get_resource(url){
-    return fetch(url)
+    log(url.toString())
+    fetch(url.toString())
     .then(
         function (response){
+            log(response.status)
             return response.text()
         })
     .then(function (data){
@@ -212,12 +216,9 @@ async function get_resource(url){
         }
 
 
-        return true
-    })
-    .catch(err => {
-            console.error(err)
-            return false
-        })
+
+    }).catch(err => {log(err)})
+
 
 }
 
